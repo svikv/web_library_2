@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <form method = post action = /select>
+        <form method = post action = select>
             <button type = submit class = submitButton>next book</button>
         </form>
     </div>

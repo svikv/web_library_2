@@ -46,68 +46,37 @@ public class BookDAOHibernateImpl implements BookDAO {
 
         if  (title!=null && author!=null && year!=null && genre!=null) {
             c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author))
-                    .add(Restrictions.eq("year", year)).createCriteria("genres").add(Restrictions.eq("genre", genre));
-        }
-
-        else if(title!=null && author!=null && year!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
-            c2.createCriteria("books").add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author)).
-                    add(Restrictions.eq("year", year));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
-
-        else if(title!=null && author!=null && genre!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author)).
-                    createCriteria("genres").add(Restrictions.eq("genre", genre));
-        }
-
-        else if(title!=null && year!=null && genre!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year)).
-                    createCriteria("genres").add(Restrictions.eq("genre", genre));
+                    .add(Restrictions.eq("year", year)).createCriteria("genres").add(Restrictions.eq("type", genre));
         }
 
         else if(author!=null && year!=null && genre!=null) {
             c1.add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year)).
-                    createCriteria("genres").add(Restrictions.eq("genre", genre));
+                    createCriteria("genres").add(Restrictions.eq("type", genre));
+        }
+        else if(title!=null && year!=null && genre!=null) {
+            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year)).
+                    createCriteria("genres").add(Restrictions.eq("type", genre));
         }
 
-        else if(title!=null && author!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author));
-            c2.createCriteria("books").add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
-
-        else if(title!=null && year!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year));
-            Genre g=(Genre)c2.list().get(0);
-            c2.createCriteria("books").add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year));
-            genre=g.getGenre();
-        }
-
-        else if(title!=null && genre!=null) {
-            c1.add(Restrictions.eq("title", title)).createCriteria("genres").add(Restrictions.eq("genre", genre));
-
-        }
-
-        else if (author!=null && year!=null) {
-            c1.add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
-            c2.createCriteria("books").add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
+        else if(title!=null && author!=null && genre!=null) {
+            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author)).
+                    createCriteria("genres").add(Restrictions.eq("type", genre));
         }
 
         else if(author!=null && genre!=null) {
-            c1.add(Restrictions.eq("author", author)).createCriteria("genres").add(Restrictions.eq("genre", genre));
+            c1.add(Restrictions.eq("author", author)).createCriteria("genres").add(Restrictions.eq("type", genre));
         }
 
         else if(year!=null && genre!=null) {
-            c1.add(Restrictions.eq("year", year)).createCriteria("genres").add(Restrictions.eq("genre", genre));
+            c1.add(Restrictions.eq("year", year)).createCriteria("genres").add(Restrictions.eq("type", genre));
+        }
+
+        else if(title!=null && genre!=null) {
+            c1.add(Restrictions.eq("title", title)).createCriteria("genres").add(Restrictions.eq("type", genre));
         }
 
         else if (genre!=null){
-            c1.createCriteria("genres").add(Restrictions.eq("genre", genre));
+            c1.createCriteria("genres").add(Restrictions.eq("type", genre));
         }
 
         else if (title!=null) {
@@ -127,6 +96,27 @@ public class BookDAOHibernateImpl implements BookDAO {
         else if(year!=null) {
             c1.add(Restrictions.eq("year", year));
             c2.createCriteria("books").add(Restrictions.eq("year", year));
+            Genre g=(Genre)c2.list().get(0);
+            genre=g.getGenre();
+        }
+
+        else if(title!=null && author!=null) {
+            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author));
+            c2.createCriteria("books").add(Restrictions.eq("title", title)).add(Restrictions.eq("title", title));
+            Genre g=(Genre)c2.list().get(0);
+            genre=g.getGenre();
+        }
+
+        else if(title!=null && year!=null) {
+            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year));
+            c2.createCriteria("books").add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year));
+            Genre g=(Genre)c2.list().get(0);
+            genre=g.getGenre();
+        }
+
+        else if(author!=null && year!=null) {
+            c1.add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
+            c2.createCriteria("books").add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
             Genre g=(Genre)c2.list().get(0);
             genre=g.getGenre();
         }

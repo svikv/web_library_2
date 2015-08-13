@@ -8,6 +8,14 @@ public class BookFull {
     private List<Book> books;
     private String genre;
 
+    @Override
+    public String toString() {
+        return "BookFull{" +
+                "books=" + books +
+                ", genre='" + genre + '\'' +
+                '}';
+    }
+
     public BookFull(List<Book> books,String genre){
         this.books=books;
         this.genre=genre;

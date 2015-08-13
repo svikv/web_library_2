@@ -16,7 +16,6 @@
 
 <div id = view>
   <% List<Book> list=(List<Book>) request.getAttribute("books");
-    String genre= (String) request.getAttribute("genre");
     for(Book book:list) {
   %>
   <div id = bookCard>
@@ -53,10 +52,10 @@
       </div>
     </div>
     <div class = block>
-      <div class = ttl>year</div>
+      <div class = ttl>genre</div>
       <div class = data>
         <div class = dataField>
-          <%=genre%>
+          <%=request.getAttribute("genre")%>
         </div>
       </div>
     </div>

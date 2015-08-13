@@ -1,0 +1,34 @@
+package com.weblibrary.entity;
+import javax.persistence.*;
+import java.util.*;
+
+@Entity
+@Table(name="book")
+public class Book {
+    long isbn;
+    String title;
+    String author;
+    String year;
+    List<Genre> genres=new Vector<Genre>();
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "book_genre",joinColumns = {@JoinColumn(name = "book_isbn")},
+            inverseJoinColumns = {@JoinColumn(name = "genre_id")})
+    public List<Genre> getGenres() {return genres; }
+    public void setGenres(List<Genre> genres) {this.genres=genres; }
+
+    @Id
+    @GeneratedValue
+    public long getIsbn(){return isbn;}
+    public void setIsbn(long isbn){this.isbn=isbn;}
+
+    public String getTitle(){return title;}
+    public void setTitle(String title){this.title=title; }
+
+    public String getAuthor(){return author;}
+    public void setAuthor(String author){this.author=author; }
+
+    public String getYear(){return year; }
+    public void setYear(String year){this.year=year;}
+}
+

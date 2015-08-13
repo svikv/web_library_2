@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href = "css/mainStyle.css" rel = stylesheet type = text/css>
+    <!--<link href = "css/indexStyle.css" rel = stylesheet type = text/css>-->
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id = header>Select</div>
+
+    <div id = formField>
+        <form method="post" action = "find">
+            <label for = title>title</label>
+            <input type = text name = title id = title class = textinput>
+
+            <label for = author>author</label>
+            <input type = text name = author id = author class = textinput>
+
+            <label for = year>year</label>
+            <input type = text name = year id = year class = textinput>
+
+            <label for = genre>genre</label>
+            <input type = text name = genre id = genre class = textinput>
+
+            <br><input type = radio name = type value = random class = radio id = r1 checked>
+                    <label for = r1>show random</label>
+            <br><input type = radio name = type value = all class = radio id = r2>
+                    <label for = r2>show all</label>
+
+            <button type = submit class = submitButton>Find</button>
+        </form>
+    </div>
+</body>
+</html>

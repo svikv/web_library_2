@@ -39,99 +39,17 @@ public class BookDAOHibernateImpl implements BookDAO {
     public BookFull findAll(String title,String author,String year, String genre){
 
         Session session = HibernateUtil.beginTransaction();
-        List<Book> books=null;
-        List<Genre> genres=null;
+        List<Book> books;
         Criteria c1=session.createCriteria(Book.class);
-        Criteria c2=session.createCriteria(Genre.class);
 
-        if  (title!=null && author!=null && year!=null && genre!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author))
-                    .add(Restrictions.eq("year", year)).createCriteria("genres").add(Restrictions.eq("type", genre));
-        }
-
-        else if(author!=null && year!=null && genre!=null) {
-            c1.add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year)).
-                    createCriteria("genres").add(Restrictions.eq("type", genre));
-        }
-        else if(title!=null && year!=null && genre!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year)).
-                    createCriteria("genres").add(Restrictions.eq("type", genre));
-        }
-
-        else if(title!=null && author!=null && genre!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author)).
-                    createCriteria("genres").add(Restrictions.eq("type", genre));
-        }
-
-        else if(author!=null && genre!=null) {
-            c1.add(Restrictions.eq("author", author)).createCriteria("genres").add(Restrictions.eq("type", genre));
-        }
-
-        else if(year!=null && genre!=null) {
-            c1.add(Restrictions.eq("year", year)).createCriteria("genres").add(Restrictions.eq("type", genre));
-        }
-
-        else if(title!=null && genre!=null) {
-            c1.add(Restrictions.eq("title", title)).createCriteria("genres").add(Restrictions.eq("type", genre));
-        }
-
-        else if (genre!=null){
-            c1.createCriteria("genres").add(Restrictions.eq("type", genre));
-        }
-
-        else if (title!=null) {
-            c1.add(Restrictions.eq("title", title));
-            c2.createCriteria("books").add(Restrictions.eq("title", title));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
-
-        else if(author!=null) {
-            c1.add(Restrictions.eq("author", author));
-            c2.createCriteria("books").add(Restrictions.eq("author", author));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
-
-        else if(year!=null) {
-            c1.add(Restrictions.eq("year", year));
-            c2.createCriteria("books").add(Restrictions.eq("year", year));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
-
-        else if(title!=null && author!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author));
-            c2.createCriteria("books").add(Restrictions.eq("title", title)).add(Restrictions.eq("title", title));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
-
-        else if(title!=null && year!=null) {
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year));
-            c2.createCriteria("books").add(Restrictions.eq("title", title)).add(Restrictions.eq("year", year));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
-
-        else if(author!=null && year!=null) {
-            c1.add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
-            c2.createCriteria("books").add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
-
-        else if(title!=null && author!=null && year!=null){
-            c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
-            c2.createCriteria("books").add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year)).
-                    add(Restrictions.eq("year", year));
-            Genre g=(Genre)c2.list().get(0);
-            genre=g.getGenre();
-        }
+        if (!title.equals("")) c1.add(Restrictions.eq("title", title));
+        if (!author.equals("")) c1.add(Restrictions.eq("author", author));
+        if (!year.equals("")) c1.add(Restrictions.eq("year", year));
+        if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
 
         books=c1.list();
         HibernateUtil.commitTransaction();
-        return new BookFull(books,genre);
+        return new BookFull(books);
     }
 
     public void delete(long isbn){

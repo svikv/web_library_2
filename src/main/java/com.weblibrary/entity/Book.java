@@ -9,9 +9,9 @@ public class Book {
     String title;
     String author;
     String year;
-    List<Genre> genres=new Vector<Genre>();
+    List<Genre> genres=new ArrayList<>();
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "book_genre",joinColumns = {@JoinColumn(name = "book_isbn")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id")})
     public List<Genre> getGenres() {return genres; }
@@ -30,5 +30,16 @@ public class Book {
 
     public String getYear(){return year; }
     public void setYear(String year){this.year=year;}
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "isbn=" + isbn +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", year='" + year + '\'' +
+                ", genres=" + genres +
+                '}';
+    }
 }
 

@@ -28,11 +28,6 @@ public class ServletFinder extends HttpServlet{
 
         BookDAO bookDao=new BookDAOHibernateImpl();
 
-        if (title.equals("")) title = null;
-        if (author.equals("")) author = null;
-        if (year.equals("")) year = null;
-        if (genre.equals("")) genre = null;
-
         try{
             System.out.println(title+author+year+genre);
 

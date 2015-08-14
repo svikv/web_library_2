@@ -1,3 +1,6 @@
+<%@ page import="com.weblibrary.entity.Genre" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.weblibrary.entity.Book" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,7 +14,6 @@
     </div>
 
     <div id = view>
-        <%  String genre= (String) request.getAttribute("genre");%>
         <div id = bookCard>
             <div class = block>
                 <div class = ttl>title</div>
@@ -45,15 +47,23 @@
                     </div>
                 </div>
             </div>
+            <%
+                Book book = (Book) request.getAttribute("book");
+                List<Genre> genres = book.getGenres();
+                for(Genre genre:genres) {
+            %>
             <div class = block>
-                <div class = ttl>year</div>
+                <div class = ttl>genre</div>
                 <div class = data>
                     <div class = dataField>
-                        <%=genre%>
+                        <%=genre.getGenre()%>
                     </div>
                 </div>
             </div>
+
+        <%}%>
         </div>
+    </div>
 
         <form method = post action = select>
             <button type = submit class = submitButton>next book</button>

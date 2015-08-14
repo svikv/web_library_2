@@ -1,5 +1,6 @@
 package com.weblibrary.Servlet.ClienServlets;
 
+import com.weblibrary.entity.Book;
 import com.weblibrary.service.*;
 
 import javax.servlet.RequestDispatcher;
@@ -19,17 +20,15 @@ public class ServletSelector extends HttpServlet{
         String type = (String) session.getAttribute("type");
         BookFull bookFull = (BookFull)session.getAttribute("bookFull");
 
-        String genre=bookFull.getGenre();
         RequestDispatcher requestDispatcher = null;
 
         try{
             if (type.equals("random")){
-                request.setAttribute("book", bookFull.getRandom());
-                request.setAttribute("genre", genre);
+                Book book = bookFull.getRandom();
+                request.setAttribute("book", book);
                 requestDispatcher = request.getRequestDispatcher("/showBook.jsp");
             } else {
                 request.setAttribute("books", bookFull.getAll());
-                request.setAttribute("genre", genre);
                 requestDispatcher= request.getRequestDispatcher("/showAllBook.jsp");
             }
         } catch (Exception e){

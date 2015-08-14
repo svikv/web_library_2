@@ -1,5 +1,6 @@
 <%@ page import="com.weblibrary.entity.Book" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.weblibrary.entity.Genre" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -51,14 +52,20 @@
         </div>
       </div>
     </div>
-    <div class = block>
-      <div class = ttl>genre</div>
-      <div class = data>
-        <div class = dataField>
-          <%=request.getAttribute("genre")%>
+
+    <%
+      List<Genre> genres = (List<Genre>) book.getGenres();
+      for(Genre genre:genres) {
+    %>
+      <div class = block>
+        <div class = ttl>genre</div>
+        <div class = data>
+          <div class = dataField>
+            <%=genre.getGenre()%>
+          </div>
         </div>
       </div>
-    </div>
+  <%}%>
   </div>
 
   <%}%>

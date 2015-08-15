@@ -12,7 +12,7 @@
 <body>
 
 <div id = "header">
-  Your books Please!!!
+  Your books Please
 </div>
 
 <div id = view>
@@ -54,7 +54,7 @@
     </div>
 
     <%
-      List<Genre> genres = (List<Genre>) book.getGenres();
+      List<Genre> genres = book.getGenres();
       for(Genre genre:genres) {
     %>
       <div class = block>
@@ -72,7 +72,7 @@
 </div>
 
 <form action = index.html>
-  <button class = submitButton>return!!!</button>
+  <button class = submitButton>return</button>
 </form>
 </body>
 </html>

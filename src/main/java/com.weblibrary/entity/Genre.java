@@ -1,4 +1,7 @@
 package com.weblibrary.entity;
+import com.weblibrary.service.HibernateUtil;
+import org.hibernate.*;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Vector;
@@ -9,6 +12,12 @@ public class Genre {
     long id;
     String genre;
     List<Book> books=new Vector<Book>();
+
+    public Genre(){}
+    public Genre(long id,String genre){
+        this.id=id;
+        this.genre=genre;
+    }
 
     @ManyToMany
     @JoinTable(name = "book_genre",joinColumns = {@JoinColumn(name = "genre_id")},
@@ -23,4 +32,15 @@ public class Genre {
 
     public String getGenre(){return genre; }
     public void setGenre(String genre){this.genre=genre;}
+
+    public static Genre getGenre(String type){
+        Session session= HibernateUtil.beginTransaction();
+        String hql="select g.id from Genre g where g.genre=:type";
+        org.hibernate.Query query  = session.createQuery(hql);
+        query.setString("type", type);
+
+        long id = (Long)query.uniqueResult();
+        HibernateUtil.commitTransaction();
+        return new Genre(id,type);
+    }
 }

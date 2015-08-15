@@ -1,7 +1,6 @@
-package com.weblibrary.Servlet.ClienServlets;
+package com.weblibrary.Servlet.ClientServlets;
 
-import com.weblibrary.dao.*;
-import com.weblibrary.dao.BookDAOHibernateImpl;
+import com.weblibrary.dao.BookDAO;
 import com.weblibrary.service.BookFull;
 import org.hibernate.HibernateException;
 
@@ -26,15 +25,10 @@ public class ServletFinder extends HttpServlet{
         String genre = request.getParameter("genre");
         String type = request.getParameter("type");
 
-        BookDAO bookDao=new BookDAOHibernateImpl();
+        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
 
         try{
-            System.out.println(title+author+year+genre);
-
             BookFull bookFull= bookDao.findAll(title,author,year,genre);
-
-            System.out.println(bookFull.toString());
-
             session.setAttribute("bookFull", bookFull);
             session.setAttribute("type", type);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/select");

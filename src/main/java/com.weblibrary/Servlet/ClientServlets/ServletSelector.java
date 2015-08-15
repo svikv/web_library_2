@@ -1,4 +1,4 @@
-package com.weblibrary.Servlet.ClienServlets;
+package com.weblibrary.Servlet.ClientServlets;
 
 import com.weblibrary.entity.Book;
 import com.weblibrary.service.*;

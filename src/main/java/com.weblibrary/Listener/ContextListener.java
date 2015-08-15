@@ -1,5 +1,7 @@
 package com.weblibrary.Listener;
 
+import com.weblibrary.dao.BookDAO;
+import com.weblibrary.dao.BookDAOHibernateImpl;
 import com.weblibrary.service.DBManager;
 
 import javax.servlet.ServletContext;
@@ -11,14 +13,8 @@ import javax.servlet.annotation.WebListener;
 public class ContextListener implements ServletContextListener{
     public void contextInitialized(ServletContextEvent servletContextEvent){
         ServletContext sc = servletContextEvent.getServletContext();
-        String user = sc.getInitParameter("DBUSER");
-        String password = sc.getInitParameter("DBPASSWORD");
-        String url = sc.getInitParameter("DBURL");
-
-        System.out.println("contextInitialized...");
-
-        DBManager dbm = new DBManager(user, password, url);
-        sc.setAttribute("DBManager", dbm);
+        BookDAO bookDao=new BookDAOHibernateImpl();
+        sc.setAttribute("DBManager",bookDao);
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent){

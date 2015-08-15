@@ -1,8 +1,8 @@
 package com.weblibrary.dao;
 
-import com.weblibrary.service.BookFull;
 import com.weblibrary.entity.Book;
 import com.weblibrary.entity.Genre;
+import com.weblibrary.service.BookFull;
 import com.weblibrary.service.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -13,41 +13,43 @@ import java.util.List;
 
 public class BookDAOHibernateImpl implements BookDAO {
 
-    public void addBook(String title,String author,String year, String type1, String type2){
-
-        //Session session=HibernateUtil.getSession();
-        //session.beginTransaction();
-        Session session = HibernateUtil.beginTransaction();
+    public void addBook(String title,String author,String year, String type1, String type2,String type3){
 
         Book book=new Book();
-        Genre genre1=new Genre();
-        Genre genre2=new Genre();
+        book.setAuthor(author);
+        book.setTitle(title);
+        book.setYear(year);
 
-        book.getGenres().add(genre1);
-        book.getGenres().add(genre2);
-        genre1.getBooks().add(book);
-        genre2.getBooks().add(book);
+        if(!type1.equals("")) book.getGenres().add(Genre.getGenre(type1));
+        if(!type2.equals("")) book.getGenres().add(Genre.getGenre(type2));
+        if(!type3.equals("")) book.getGenres().add(Genre.getGenre(type3));
 
+        Session session = HibernateUtil.beginTransaction();
         session.save(book);
-
-
         HibernateUtil.commitTransaction();
-        //session.close();
         System.out.println("Transaction successful!!!");
     }
 
     public BookFull findAll(String title,String author,String year, String genre){
+        /*criteria = session.createCriteria(Employee.class, "employee");
+        criteria.setFetchMode("employee.address", FetchMode.JOIN);
+        criteria.createAlias("employee.address", "address"); // inner join by default*/
+
 
         Session session = HibernateUtil.beginTransaction();
-        List<Book> books;
         Criteria c1=session.createCriteria(Book.class);
+
+                //add(Restrictions.naturalId());
+                ;//.createAlias("a.b", "b");
+                //.setFetchMode("book_genre", FetchMode.JOIN).createAlias("book_genre","genre");
+
 
         if (!title.equals("")) c1.add(Restrictions.eq("title", title));
         if (!author.equals("")) c1.add(Restrictions.eq("author", author));
         if (!year.equals("")) c1.add(Restrictions.eq("year", year));
         if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
 
-        books=c1.list();
+        List<Book> books=c1.list();
         HibernateUtil.commitTransaction();
         return new BookFull(books);
     }

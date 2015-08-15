@@ -28,7 +28,7 @@ public class ServletAdder extends HttpServlet {
 
         BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
 
-        System.out.println(title+author+year+genre1+genre2+genre3);
+        System.out.println(title + author + year + genre1 + genre2 + genre3);
 
         try{
             bookDao.addBook(title,author,year,genre1,genre2,genre3);
@@ -41,16 +41,12 @@ public class ServletAdder extends HttpServlet {
             requestDispatcher.forward(request, response);
         }
 
-        List<String> genres = new ArrayList<>();
-        genres.add(genre1);
-        genres.add(genre2);
-        genres.add(genre3);
-        Book book = new Book(title,author,year);
+
+        Book book = bookDao.findBook(title,author,year);
         String message = "Book added!";
         request.setAttribute("book", book);
-        request.setAttribute("genres", genres);
         request.setAttribute("msg", message);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/view.jsp");
         requestDispatcher.forward(request, response);
     }
 }

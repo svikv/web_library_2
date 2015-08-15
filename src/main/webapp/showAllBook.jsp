@@ -1,6 +1,7 @@
 <%@ page import="com.weblibrary.entity.Book" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.weblibrary.entity.Genre" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -16,7 +17,7 @@
 </div>
 
 <div id = view>
-  <% List<Book> list=(List<Book>) request.getAttribute("books");
+  <% ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("books");
     for(Book book:list) {
   %>
   <div id = bookCard>

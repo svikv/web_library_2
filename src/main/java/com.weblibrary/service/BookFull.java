@@ -1,11 +1,12 @@
 package com.weblibrary.service;
 import com.weblibrary.entity.Book;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class BookFull {
-    private List<Book> books;
+    private ArrayList<Book> books;
 
     @Override
     public String toString() {
@@ -14,7 +15,7 @@ public class BookFull {
                 '}';
     }
 
-    public BookFull(List<Book> books){
+    public BookFull(ArrayList<Book> books){
         this.books=books;
     }
 

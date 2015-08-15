@@ -1,7 +1,7 @@
 package com.weblibrary.Servlet.AdminServlets;
-
-import com.weblibrary.Service.Book;
-import com.weblibrary.Service.BookManager;
+/*
+import com.weblibrary.entity.Book;
+import com.weblibrary.ervice.BookManag;
 import com.weblibrary.Service.DBManager;
 
 import javax.servlet.RequestDispatcher;
@@ -36,3 +36,4 @@ public class ServletUpdater extends HttpServlet {
         }
     }
 }
+*/

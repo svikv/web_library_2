@@ -3,6 +3,7 @@ import com.weblibrary.service.HibernateUtil;
 import org.hibernate.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -11,7 +12,7 @@ import java.util.Vector;
 public class Genre {
     long id;
     String genre;
-    List<Book> books=new Vector<Book>();
+    List<Book> books=new ArrayList<>();
 
     public Genre(){}
     public Genre(long id,String genre){

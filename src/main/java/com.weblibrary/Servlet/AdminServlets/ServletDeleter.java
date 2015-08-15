@@ -1,5 +1,5 @@
 package com.weblibrary.Servlet.AdminServlets;
-
+/*
 import com.weblibrary.Service.Book;
 import com.weblibrary.Service.BookManager;
 import com.weblibrary.Service.DBManager;
@@ -36,3 +36,4 @@ public class ServletDeleter extends HttpServlet {
         }
     }
 }
+*/

@@ -14,13 +14,13 @@ public class ContextListener implements ServletContextListener{
     public void contextInitialized(ServletContextEvent servletContextEvent){
         ServletContext sc = servletContextEvent.getServletContext();
         BookDAO bookDao=new BookDAOHibernateImpl();
-        sc.setAttribute("DBManager",bookDao);
+        sc.setAttribute("bookDao",bookDao);
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent){
         System.out.println("contextDestroyed...");
         ServletContext sc = servletContextEvent.getServletContext();
-        DBManager dbm = (DBManager) sc.getAttribute("DBManager");
+        DBManager dbm = (DBManager) sc.getAttribute("bookDao");
         dbm.closeConnection();
     }
 }

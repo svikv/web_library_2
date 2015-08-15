@@ -11,6 +11,15 @@ public class Book {
     String year;
     List<Genre> genres=new ArrayList<>();
 
+    public Book(String title, String author, String year){
+        this.title = title;
+        this.author = author;
+        this.year = year;
+    }
+
+    public Book() {
+    }
+
     @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "book_genre",joinColumns = {@JoinColumn(name = "book_isbn")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id")})

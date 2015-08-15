@@ -9,16 +9,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookDAOHibernateImpl implements BookDAO {
 
     public void addBook(String title,String author,String year, String type1, String type2,String type3){
 
-        Book book=new Book();
-        book.setAuthor(author);
-        book.setTitle(title);
-        book.setYear(year);
+        Book book=new Book(title, author, year);
 
         if(!type1.equals("")) book.getGenres().add(Genre.getGenre(type1));
         if(!type2.equals("")) book.getGenres().add(Genre.getGenre(type2));
@@ -49,7 +47,7 @@ public class BookDAOHibernateImpl implements BookDAO {
         if (!year.equals("")) c1.add(Restrictions.eq("year", year));
         if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
 
-        List<Book> books=c1.list();
+        ArrayList<Book> books= (ArrayList<Book>) c1.list();
         HibernateUtil.commitTransaction();
         return new BookFull(books);
     }

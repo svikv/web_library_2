@@ -9,6 +9,6 @@ public interface BookDAO {
     void delete(long isbn);
     Book findBook(String title,String author,String year);
     BookFull findAll(String title,String author,String year,String genre);
-    Book findByIsbn(String isbn);
+    Book findByIsbn(long isbn);
     Book update(long isbn,String author,String title,String year, String genre1, String genre2, String genre3);
 }

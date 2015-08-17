@@ -14,33 +14,24 @@ import java.util.List;
 
 public class BookDAOHibernateImpl implements BookDAO {
 
-    public void addBook(String title,String author,String year, String type1, String type2,String type3){
+    public void addBook(String title,String author,String year, String genre1, String genre2,String genre3){
 
         Book book=new Book(title, author, year);
 
-        if(!type1.equals("")) book.getGenres().add(Genre.getGenre(type1));
-        if(!type2.equals("")) book.getGenres().add(Genre.getGenre(type2));
-        if(!type3.equals("")) book.getGenres().add(Genre.getGenre(type3));
+        if(!"".equals(genre1)) book.getGenres().add(Genre.getGenre(genre1));
+        if(!"".equals(genre2)) book.getGenres().add(Genre.getGenre(genre2));
+        if(!"".equals(genre3)) book.getGenres().add(Genre.getGenre(genre3));
 
         Session session = HibernateUtil.beginTransaction();
-        session.save(book);
+        session.saveOrUpdate(book);
         HibernateUtil.commitTransaction();
         System.out.println("Transaction successful!!!");
     }
 
     public BookFull findAll(String title,String author,String year, String genre){
-        /*criteria = session.createCriteria(Employee.class, "employee");
-        criteria.setFetchMode("employee.address", FetchMode.JOIN);
-        criteria.createAlias("employee.address", "address"); // inner join by default*/
-
 
         Session session = HibernateUtil.beginTransaction();
         Criteria c1=session.createCriteria(Book.class);
-
-                //add(Restrictions.naturalId());
-                ;//.createAlias("a.b", "b");
-                //.setFetchMode("book_genre", FetchMode.JOIN).createAlias("book_genre","genre");
-
 
         if (!title.equals("")) c1.add(Restrictions.eq("title", title));
         if (!author.equals("")) c1.add(Restrictions.eq("author", author));
@@ -84,10 +75,26 @@ public class BookDAOHibernateImpl implements BookDAO {
         return list.get(0);
     }
 
-    public Book findByIsbn(String ISBN){
-        long isbn = Integer.parseInt(ISBN);
+    public Book findByIsbn(long isbn){
         Session session=HibernateUtil.beginTransaction();
         Book book = (Book) session.get(Book.class, isbn);
+        HibernateUtil.commitTransaction();
+        return book;
+    }
+
+    @Override
+    public Book update(long isbn, String author, String title, String year, String genre1, String genre2, String genre3) {
+        Book book = findByIsbn(isbn);
+
+        book.setAuthor(author);
+        book.setTitle(title);
+        book.setYear(year);
+        if(!"".equals(genre1)) book.getGenres().add(Genre.getGenre(genre1));
+        if(!"".equals(genre2)) book.getGenres().add(Genre.getGenre(genre2));
+        if(!"".equals(genre3)) book.getGenres().add(Genre.getGenre(genre3));
+
+        Session session = HibernateUtil.beginTransaction();
+        session.saveOrUpdate(book);
         HibernateUtil.commitTransaction();
         return book;
     }

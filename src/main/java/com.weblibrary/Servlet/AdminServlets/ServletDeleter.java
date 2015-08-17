@@ -15,7 +15,8 @@ import java.io.IOException;
 @WebServlet("/findfordelete")
 public class ServletDeleter extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String isbn = request.getParameter("isbn");
+        String ISBN = request.getParameter("isbn");
+        long isbn = Integer.parseInt(ISBN);
 
         BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
 

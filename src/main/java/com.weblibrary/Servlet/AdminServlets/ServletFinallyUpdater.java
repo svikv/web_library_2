@@ -26,7 +26,7 @@ public class ServletFinallyUpdater extends HttpServlet {
         long isbn = Integer.parseInt(ISBN);
 
         BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
-        Book book = bookDao.update(isbn, author, title, year);
+        Book book = bookDao.update(isbn, author, title, year, genre1, genre2, genre3);
 
         request.setAttribute("book", book);
         request.setAttribute("msg", "Updated book!");

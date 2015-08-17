@@ -2,6 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.weblibrary.entity.Genre" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashSet" %>
+<%@ page import="java.util.Iterator" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -17,8 +19,10 @@
 </div>
 
 <div id = view>
-  <% ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("books");
-    for(Book book:list) {
+  <% HashSet<Book> list = (HashSet<Book>) request.getAttribute("books");
+    Iterator<Book> iterator=list.iterator();
+    while (iterator.hasNext()){
+      Book book=iterator.next();
   %>
   <div id = bookCard>
     <div class = block>
@@ -55,7 +59,7 @@
     </div>
 
     <%
-      List<Genre> genres = book.getGenres();
+      List<Genre> genres = (List<Genre>)book.getGenres();
       for(Genre genre:genres) {
     %>
       <div class = block>

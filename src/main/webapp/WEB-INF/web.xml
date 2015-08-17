@@ -6,24 +6,12 @@
     version="3.1">
 
     <context-param>
-        <param-name>DBUSER</param-name>
-        <param-value>root</param-value>
-    </context-param>
-    <context-param>
-        <param-name>DBPASSWORD</param-name>
-        <param-value>svik</param-value>
-    </context-param>
-    <context-param>
-        <param-name>DBURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/library</param-value>
-    </context-param>
-    <context-param>
         <param-name>adminLogin</param-name>
-        <param-value>admin</param-value>
+        <param-value>a</param-value>
     </context-param>
     <context-param>
         <param-name>adminPassword</param-name>
-        <param-value>password</param-value>
+        <param-value>a</param-value>
     </context-param>
 </web-app>
 

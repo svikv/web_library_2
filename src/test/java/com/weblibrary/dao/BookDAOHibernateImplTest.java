@@ -23,7 +23,7 @@ public class BookDAOHibernateImplTest {
         System.out.println("1");
         bookDAO.addBook("t", "a", "y", "Horror", "", "");
         System.out.println("2");
-        Book book = new Book("t", "a", "y");
+        Book book = new Book("tl", "a", "y");
         book.getGenres().add(Genre.getGenre(genre1));
 
         Session session= HibernateUtil.beginTransaction();

@@ -49,6 +49,7 @@
             </div>
             <%
                 Book book = (Book) request.getAttribute("book");
+                System.out.println(book.toString());
                 List<Genre> genres = book.getGenres();
                 for(Genre genre:genres) {
             %>

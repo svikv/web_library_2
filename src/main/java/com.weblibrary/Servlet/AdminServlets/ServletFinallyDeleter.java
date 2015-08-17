@@ -24,12 +24,12 @@ public class ServletFinallyDeleter extends HttpServlet {
             e.printStackTrace();
             String error = "Error deleting book!";
             request.setAttribute("error", error);
-            request.setAttribute("forwardTo", "admin/admin.html");
+            request.setAttribute("forwardTo", "/admin/admin.html");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/error.jsp");
             requestDispatcher.forward(request, response);
         }
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin.html");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/admin.html");
         requestDispatcher.forward(request, response);
     }
 }

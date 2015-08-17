@@ -40,6 +40,39 @@
           </div>
         </div>
 
+        <div class = "down">
+          <label>Genres</label><br>
+          <div class = inputBlock>
+            <select name = genre1>
+              <option value=""></option>
+              <option value = Horror>Horror</option>
+              <option value = Fantasy>Fantasy</option>
+              <option value = Travel>Travel</option>
+              <option value = Autobiographies>Autobiographies</option>
+            </select>
+          </div>
+
+          <div class = inputBlock>
+            <select name = genre2>
+              <option value=""></option>
+              <option value = Horror>Horror</option>
+              <option value = Fantasy>Fantasy</option>
+              <option value = Travel>Travel</option>
+              <option value = Autobiographies>Autobiographies</option>
+            </select>
+          </div>
+
+          <div class = inputBlock>
+            <select name = genre3>
+              <option value=""></option>
+              <option value = Horror>Horror</option>
+              <option value = Fantasy>Fantasy</option>
+              <option value = Travel>Travel</option>
+              <option value = Autobiographies>Autobiographies</option>
+            </select>
+          </div>
+        </div>
+
         <button type = submit class = "submitButton">update</button>
       </form>
 

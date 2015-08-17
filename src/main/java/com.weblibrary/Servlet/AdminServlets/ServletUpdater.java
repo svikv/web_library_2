@@ -1,8 +1,8 @@
 package com.weblibrary.Servlet.AdminServlets;
-/*
+
+import com.weblibrary.dao.BookDAO;
 import com.weblibrary.entity.Book;
-import com.weblibrary.ervice.BookManag;
-import com.weblibrary.Service.DBManager;
+import org.hibernate.HibernateException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,22 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/findforupdate")
 public class ServletUpdater extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String isbn = request.getParameter("isbn");
 
-        Book book;
-        DBManager dbManager = (DBManager) getServletContext().getAttribute("DBManager");
-        BookManager bookManager = new BookManager(dbManager);
+        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
+
         try{
-            book = bookManager.findBook(isbn);
+            Book book = bookDao.findByIsbn(isbn);
             request.setAttribute("book", book);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/update.jsp");
             requestDispatcher.forward(request, response);
-        } catch (SQLException e){
+        } catch (HibernateException e){
             e.printStackTrace();
             String error = "Error updating book!";
             request.setAttribute("error", error);
@@ -36,4 +34,3 @@ public class ServletUpdater extends HttpServlet {
         }
     }
 }
-*/

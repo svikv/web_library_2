@@ -79,7 +79,15 @@ public class BookDAOHibernateImpl implements BookDAO {
         Session session=HibernateUtil.beginTransaction();
         Criteria c1=session.createCriteria(Book.class);
         c1.add(Restrictions.eq("title", title)).add(Restrictions.eq("author", author)).add(Restrictions.eq("year", year));
-        Book book = (Book) c1.list();
+        ArrayList<Book> list= (ArrayList<Book>) c1.list();
+        HibernateUtil.commitTransaction();
+        return list.get(0);
+    }
+
+    public Book findByIsbn(String ISBN){
+        long isbn = Integer.parseInt(ISBN);
+        Session session=HibernateUtil.beginTransaction();
+        Book book = (Book) session.get(Book.class, isbn);
         HibernateUtil.commitTransaction();
         return book;
     }

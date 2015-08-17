@@ -14,7 +14,7 @@ import java.util.LinkedHashSet;
 
 public class BookDAOHibernateImpl implements BookDAO {
 
-    public void addBook(String title,String author,String year, String genre1, String genre2,String genre3){
+    public long addBook(String title,String author,String year, String genre1, String genre2,String genre3){
 
         Book book=new Book(title, author, year);
 
@@ -25,7 +25,8 @@ public class BookDAOHibernateImpl implements BookDAO {
         Session session = HibernateUtil.beginTransaction();
         session.saveOrUpdate(book);
         HibernateUtil.commitTransaction();
-        System.out.println("Transaction successful!!!");
+        System.out.println("Transaction successful!!! ");
+        return book.getIsbn();
     }
 
     public BookFull findAll(String title,String author,String year, String genre){
@@ -39,8 +40,8 @@ public class BookDAOHibernateImpl implements BookDAO {
         if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
 
         ArrayList<Book> books= (ArrayList<Book>) c1.list();
-        LinkedHashSet<Book> linkedHashSet = new LinkedHashSet<Book>(books);
-        books = new ArrayList<Book>(linkedHashSet);
+        LinkedHashSet<Book> linkedHashSet = new LinkedHashSet<>(books);
+        books = new ArrayList<>(linkedHashSet);
         HibernateUtil.commitTransaction();
         return new BookFull(books);
     }
@@ -54,17 +55,6 @@ public class BookDAOHibernateImpl implements BookDAO {
         int row =query.executeUpdate();
         System.out.println(row+ " row were deleted");
         HibernateUtil.commitTransaction();
-    }
-
-    public Book update(long isbn,String author,String title,String year){
-
-        Session session=HibernateUtil.beginTransaction();
-        Book book=(Book)session.get(Book.class,isbn);
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setYear(year);
-        HibernateUtil.commitTransaction();
-        return book;
     }
 
     public Book findBook(String title,String author,String year){

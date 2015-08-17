@@ -50,5 +50,30 @@ public class Book {
                 ", genres=" + genres +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+
+        Book book = (Book) o;
+
+        if (getIsbn() != book.getIsbn()) return false;
+        if (getTitle() != null ? !getTitle().equals(book.getTitle()) : book.getTitle() != null) return false;
+        if (getAuthor() != null ? !getAuthor().equals(book.getAuthor()) : book.getAuthor() != null) return false;
+        if (getYear() != null ? !getYear().equals(book.getYear()) : book.getYear() != null) return false;
+        return !(getGenres() != null ? !getGenres().equals(book.getGenres()) : book.getGenres() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getIsbn() ^ (getIsbn() >>> 32));
+        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+        result = 31 * result + (getAuthor() != null ? getAuthor().hashCode() : 0);
+        result = 31 * result + (getYear() != null ? getYear().hashCode() : 0);
+        result = 31 * result + (getGenres() != null ? getGenres().hashCode() : 0);
+        return result;
+    }
 }
 

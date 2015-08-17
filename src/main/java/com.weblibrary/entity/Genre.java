@@ -44,4 +44,31 @@ public class Genre {
         HibernateUtil.commitTransaction();
         return new Genre(id,type);
     }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "id=" + id +
+                ", genre='" + genre + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Genre)) return false;
+
+        Genre genre1 = (Genre) o;
+
+        if (getId() != genre1.getId()) return false;
+        return !(getGenre() != null ? !getGenre().equals(genre1.getGenre()) : genre1.getGenre() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (getGenre() != null ? getGenre().hashCode() : 0);
+        return result;
+    }
 }

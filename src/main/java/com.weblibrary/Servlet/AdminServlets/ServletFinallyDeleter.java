@@ -1,7 +1,6 @@
 package com.weblibrary.Servlet.AdminServlets;
 
 import com.weblibrary.dao.BookDAO;
-import com.weblibrary.service.DBManager;
 import org.hibernate.HibernateException;
 
 import javax.servlet.RequestDispatcher;

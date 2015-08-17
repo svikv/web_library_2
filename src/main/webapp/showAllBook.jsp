@@ -19,7 +19,7 @@
 </div>
 
 <div id = view>
-  <% HashSet<Book> list = (HashSet<Book>) request.getAttribute("books");
+  <% ArrayList<Book> list = (ArrayList<Book>) request.getAttribute("books");
     Iterator<Book> iterator=list.iterator();
     while (iterator.hasNext()){
       Book book=iterator.next();
@@ -59,7 +59,7 @@
     </div>
 
     <%
-      List<Genre> genres = (List<Genre>)book.getGenres();
+      List<Genre> genres = book.getGenres();
       for(Genre genre:genres) {
     %>
       <div class = block>

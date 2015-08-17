@@ -10,10 +10,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import java.beans.Expression;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 public class BookDAOHibernateImpl implements BookDAO {
 
@@ -42,8 +40,11 @@ public class BookDAOHibernateImpl implements BookDAO {
         if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
 
         ArrayList<Book> books= (ArrayList<Book>) c1.list();
+        HashSet<Book> hash=new HashSet<>();
+        for(Book book:books)  hash.add(book);
+
         HibernateUtil.commitTransaction();
-        return new BookFull(books);
+        return new BookFull(hash);
     }
 
     public void delete(long isbn)  throws HibernateException{
@@ -71,7 +72,7 @@ public class BookDAOHibernateImpl implements BookDAO {
         Session session=HibernateUtil.beginTransaction();
         Book book = (Book) session.get(Book.class, isbn);
         HibernateUtil.commitTransaction();
-        System.out.println(isbn+ " "+book.toString());
+        System.out.println(isbn + " " + book.toString());
         return book;
     }
 

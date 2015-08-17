@@ -17,12 +17,12 @@ public class BookFull {
         this.books=books;
     }
 
-
     public Book getRandom(){
+
         Random random = new Random();
-        int number = random.nextInt(books.size());
-        Book book = books.get(number);
-        books.remove(0);
+        Book[] asArray = (Book[]) books.toArray();
+        Book book = asArray[random.nextInt(asArray.length)];
+        books.remove(book);
         return book;
     }
 

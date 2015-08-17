@@ -1,12 +1,10 @@
 package com.weblibrary.service;
 import com.weblibrary.entity.Book;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class BookFull {
-    private ArrayList<Book> books;
+    private HashSet<Book> books;
 
     @Override
     public String toString() {
@@ -15,19 +13,20 @@ public class BookFull {
                 '}';
     }
 
-    public BookFull(ArrayList<Book> books){
+    public BookFull(HashSet<Book> books){
         this.books=books;
     }
 
 
     public Book getRandom(){
-        Collections.shuffle(books);
-        Book book = books.get(0);
+        Random random = new Random();
+        int number = random.nextInt(books.size());
+        Book book = books.get(number);
         books.remove(0);
         return book;
     }
 
-    public List<Book> getAll(){
+    public HashSet<Book> getAll(){
         return books;
     }
 }

@@ -5,16 +5,19 @@ import com.weblibrary.entity.Genre;
 import com.weblibrary.service.BookFull;
 import com.weblibrary.service.HibernateUtil;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import java.beans.Expression;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class BookDAOHibernateImpl implements BookDAO {
 
-    public void addBook(String title,String author,String year, String genre1, String genre2,String genre3){
+    public void addBook(String title,String author,String year, String genre1, String genre2,String genre3) throws HibernateException{
 
         Book book=new Book(title, author, year);
 
@@ -28,7 +31,7 @@ public class BookDAOHibernateImpl implements BookDAO {
         System.out.println("Transaction successful!!!");
     }
 
-    public BookFull findAll(String title,String author,String year, String genre){
+    public BookFull findAll(String title,String author,String year, String genre) throws HibernateException{
 
         Session session = HibernateUtil.beginTransaction();
         Criteria c1=session.createCriteria(Book.class);
@@ -43,29 +46,18 @@ public class BookDAOHibernateImpl implements BookDAO {
         return new BookFull(books);
     }
 
-    public void delete(long isbn){
+    public void delete(long isbn)  throws HibernateException{
 
         Session session=HibernateUtil.beginTransaction();
         String hql = "delete Book where isbn= :number";
         Query query  = session.createQuery(hql);
         query.setLong("number", isbn);
         int row =query.executeUpdate();
-        System.out.println(row+ " row were deleted");
+        System.out.println(row + " row were deleted");
         HibernateUtil.commitTransaction();
     }
 
-    public Book update(long isbn,String author,String title,String year){
-
-        Session session=HibernateUtil.beginTransaction();
-        Book book=(Book)session.get(Book.class,isbn);
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setYear(year);
-        HibernateUtil.commitTransaction();
-        return book;
-    }
-
-    public Book findBook(String title,String author,String year){
+    public Book findBook(String title,String author,String year) throws HibernateException{
 
         Session session=HibernateUtil.beginTransaction();
         Criteria c1=session.createCriteria(Book.class);
@@ -75,20 +67,23 @@ public class BookDAOHibernateImpl implements BookDAO {
         return list.get(0);
     }
 
-    public Book findByIsbn(long isbn){
+    public Book findByIsbn(long isbn) throws HibernateException{
         Session session=HibernateUtil.beginTransaction();
         Book book = (Book) session.get(Book.class, isbn);
         HibernateUtil.commitTransaction();
+        System.out.println(isbn+ " "+book.toString());
         return book;
     }
 
     @Override
-    public Book update(long isbn, String author, String title, String year, String genre1, String genre2, String genre3) {
+    public Book update(long isbn, String author, String title, String year, String genre1, String genre2, String genre3) throws HibernateException {
         Book book = findByIsbn(isbn);
 
         book.setAuthor(author);
         book.setTitle(title);
         book.setYear(year);
+        HashSet<Genre> list = new HashSet<>();
+        book.setGenres(list);
         if(!"".equals(genre1)) book.getGenres().add(Genre.getGenre(genre1));
         if(!"".equals(genre2)) book.getGenres().add(Genre.getGenre(genre2));
         if(!"".equals(genre3)) book.getGenres().add(Genre.getGenre(genre3));

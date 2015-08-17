@@ -36,7 +36,7 @@
 
           <div class = inputBlock>
             <label for = "year">Year</label><br>
-            <input type = text id = "year" name = "year" value = "${book.isbn}" class = textinput>
+            <input type = text id = "year" name = "year" value = "${book.year}" class = textinput>
           </div>
         </div>
 

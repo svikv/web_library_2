@@ -11,7 +11,6 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 public class BookDAOHibernateImpl implements BookDAO {
 
@@ -40,7 +39,7 @@ public class BookDAOHibernateImpl implements BookDAO {
         if (!genre.equals("")) c1.add(Restrictions.eq("genre", genre));
 
         ArrayList<Book> books= (ArrayList<Book>) c1.list();
-        LinkedHashSet<Book> linkedHashSet = new LinkedHashSet<>(books);
+        LinkedHashSet<Book> linkedHashSet = new LinkedHashSet<Book>(books);
         books = new ArrayList<Book>(linkedHashSet);
         HibernateUtil.commitTransaction();
         return new BookFull(books);

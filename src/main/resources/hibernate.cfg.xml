@@ -14,9 +14,7 @@
         <property name="hbm2ddl.auto">update</property>
         <property name="hibernate.connection.autocommit">false</property>
         <property name="current_session_context_class">thread</property>
-
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-        <!--<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>-->
 
         <mapping class="com.weblibrary.entity.Book" />
         <mapping class="com.weblibrary.entity.Genre" />

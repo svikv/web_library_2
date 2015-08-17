@@ -2,7 +2,6 @@ package com.weblibrary.Listener;
 
 import com.weblibrary.dao.BookDAO;
 import com.weblibrary.dao.BookDAOHibernateImpl;
-import com.weblibrary.service.DBManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -20,7 +19,5 @@ public class ContextListener implements ServletContextListener{
     public void contextDestroyed(ServletContextEvent servletContextEvent){
         System.out.println("contextDestroyed...");
         ServletContext sc = servletContextEvent.getServletContext();
-        DBManager dbm = (DBManager) sc.getAttribute("bookDao");
-        dbm.closeConnection();
     }
 }

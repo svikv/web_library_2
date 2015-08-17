@@ -16,7 +16,6 @@ import static junit.framework.Assert.assertTrue;
 
 public class BookDAOHibernateImplTest {
     BookDAO bookDAO = new BookDAOHibernateImpl();
-    String genre1 = "Travel";
     String genre2 = "Horror";
 
     @Test

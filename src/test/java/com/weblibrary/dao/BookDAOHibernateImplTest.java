@@ -1,7 +1,5 @@
-package java.com.weblibrary.dao;
+package com.weblibrary.dao;
 
-import com.weblibrary.dao.BookDAO;
-import com.weblibrary.dao.BookDAOHibernateImpl;
 import com.weblibrary.entity.Book;
 import com.weblibrary.entity.Genre;
 import com.weblibrary.service.HibernateUtil;

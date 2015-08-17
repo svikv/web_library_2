@@ -4,7 +4,7 @@ import com.weblibrary.entity.Book;
 import java.util.*;
 
 public class BookFull {
-    private HashSet<Book> books;
+    private List<Book> books;
 
     @Override
     public String toString() {
@@ -13,7 +13,7 @@ public class BookFull {
                 '}';
     }
 
-    public BookFull(HashSet<Book> books){
+    public BookFull(List<Book> books){
         this.books=books;
     }
 
@@ -26,7 +26,7 @@ public class BookFull {
         return book;
     }
 
-    public HashSet<Book> getAll(){
+    public List<Book> getAll(){
         return books;
     }
 }

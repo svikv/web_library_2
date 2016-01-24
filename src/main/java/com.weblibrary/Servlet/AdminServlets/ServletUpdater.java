@@ -18,7 +18,7 @@ public class ServletUpdater extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String ID = request.getParameter("isbn");
-        long id = Integer.parseInt(ID);
+        long id= Integer.parseInt(ID);
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         BookDAO bookDAO = context.getBean(BookDAO.class);
 

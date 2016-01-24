@@ -23,7 +23,7 @@ public class ServletUpdater extends HttpServlet {
         BookDAO bookDAO = context.getBean(BookDAO.class);
 
         try {
-            Book book=bookDAO.findById(id);
+            Book book = bookDAO.findById(id);
             request.setAttribute("book", book);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/update.jsp");
             requestDispatcher.forward(request, response);

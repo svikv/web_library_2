@@ -3,6 +3,7 @@ package com.weblibrary.Servlet.AdminServlets;
 import com.weblibrary.dao.BookDAO;
 import com.weblibrary.entity.Book;
 import org.hibernate.HibernateException;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,14 +16,14 @@ import java.io.IOException;
 @WebServlet("/findforupdate")
 public class ServletUpdater extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ISBN = request.getParameter("isbn");
-        long isbn = Integer.parseInt(ISBN);
 
+        String ID = request.getParameter("isbn");
+        long id = Integer.parseInt(ID);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        BookDAO bookDAO = context.getBean(BookDAO.class);
 
-        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
-
-        try{
-            Book book = bookDao.findByIsbn(isbn);
+        try {
+            Book book = bookDAO.findById(id);
             request.setAttribute("book", book);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/update.jsp");
             requestDispatcher.forward(request, response);

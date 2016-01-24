@@ -1,50 +1,64 @@
 package com.weblibrary.Servlet.AdminServlets;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.weblibrary.dao.BookDAO;
-import com.weblibrary.entity.Book;
-import com.weblibrary.entity.Genre;
-import org.hibernate.HibernateException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 
-
-@WebServlet("/add")
+@WebServlet("/adder")
 public class ServletAdder extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        String year = request.getParameter("year");
-        String genre1 = request.getParameter("genre1");
-        String genre2 = request.getParameter("genre2");
-        String genre3 = request.getParameter("genre3");
 
-        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
-
-        System.out.println(title + author + year + genre1 + genre2 + genre3);
-
-        try{
-            bookDao.addBook(title,author,year,genre1,genre2,genre3);
-        } catch (HibernateException e){
+        StringBuffer json = new StringBuffer();
+        try {
+            BufferedReader reader = request.getReader();
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                json.append(line);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-            String error = "Error adding book! Book with this ISBN already exist!";
-            request.setAttribute("error", error);
-            request.setAttribute("forwardTo", "admin/admin.html");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/error.jsp");
-            requestDispatcher.forward(request, response);
+        }
+        String string=json.toString();
+        System.out.println("INPUT DATA: " + string);
+
+        Gson gson = new Gson();
+        JsonObject input = gson.fromJson(string, JsonElement.class).getAsJsonObject();
+        String titleOfArticle = input.get("titleOfArticle").getAsString();
+        String titleOfJournal = input.get("titleOfJournal").getAsString();
+        String author = input.get("author").getAsString();
+        String year = input.get("year").getAsString();
+        String reference = input.get("reference").getAsString();
+        String genre1 = input.get("genre1").getAsString();
+        String genre2 = input.get("genre2").getAsString();
+        String genre3 = input.get("genre3").getAsString();
+        String genre4 = input.get("genre4").getAsString();
+        String genre5 = input.get("genre5").getAsString();
+        System.out.println("Our Book:"+titleOfArticle + ", " + titleOfJournal + ", " + author + ", " + year +
+                ", " + genre1+ ", " + genre2+ ", " + genre3 + ", " + genre4 + ", " + genre5);
+
+        BookDAO bookDAO = (BookDAO)getServletContext().getAttribute("bookDao");
+
+        String str;
+        if (bookDAO.findBook(titleOfArticle, titleOfJournal, author, year)) {
+            bookDAO.addBook(titleOfArticle, titleOfJournal, author, year, reference, genre1, genre2, genre3, genre4, genre5);
+            str = "Book has added";
+        }
+        else {
+            str = "Error adding book! This book already exists";
         }
 
-
-        Book book = bookDao.findBook(title,author,year);
-        String message = "Book added!";
-        request.setAttribute("book", book);
-        request.setAttribute("msg", message);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/view.jsp");
-        requestDispatcher.forward(request, response);
+        try {
+            response.setContentType("application/json");
+            response.getWriter().write(gson.toJson(str));
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -2,24 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="../css/mainStyle.css" rel="stylesheet" type="text/css">
-    <link href="../css/loginStyle.css" rel = stylesheet type = "text/css">
+    <link href="../css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="../css/custom_admin.css" rel = stylesheet type = "text/css">
     <title></title>
 </head>
 <body>
+
     <div id = form>
         <div id = errorMessage><%if (request.getAttribute("error") != null) out.print(request.getAttribute("error"));%></div>
         <form method="post" action = admin>
-            <div class = inputBlock>
-                <label for = login>Login</label><br>
-                <input type = text id = login name = login class = textinput>
-            </div>
-            <div class = inputBlock>
-                <label for = password>Password</label><br>
-                <input type = password id = password name = password class = textinput>
-            </div>
+            <div class="input-block">
+                <div class="input-prepend">
+                    <span class="add-on">Login</span>
+                    <input class="span2" id="prependedInput" name = login type="text" placeholder="Enter a login">
+                </div>
+                <br/>
 
-            <button type = submit class = submitButton>log in</button>
+                <div class="input-prepend">
+                    <span class="add-on">Password</span>
+                    <input class="span2" id="prependedInput2" name = password type="text" placeholder="Enter a password">
+                </div>
+                <br/>
+
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="reset" class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="findAll">Submit</button>
+                </div>
+            </div>
         </form>
     </div>
 </body>

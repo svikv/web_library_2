@@ -1,126 +1,292 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="admin">>
 <head>
-    <meta charset="UTF-8">
-    <link href="../css/mainStyle.css" rel="stylesheet" type="text/css">
-    <script src="../js/forms.js"></script>
+    <link href="../css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="../css/custom_input.css" type="text/css" rel="stylesheet">
+    <meta charset = "UTF-8">
     <title>Library</title>
 </head>
 
-<body>
-    <div id = "header">
-        Library
+<body ng-controller="list">
+    <h1 style = "text-align:center">LIBRARY<br></h1>
+    <div id = "commands" class="col-lg-10 col-lg-offset-2">
+        <button type="button" id="button_add_book" class = "btn btn-default" ng-click = "showAdd()">Add Article</button> <br/>
+        <button type="button" id="button_delete" class = "btn btn-default" ng-click = "showDelete()">Delete Article</a></button> <br/>
+        <button type="button" id="button_add_genre" class = "btn btn-default" ng-click = "showAddGenre()">Add Keyword</button> <br/>
+        <button type="button" id="button_delete_genre" class = "btn btn-default" ng-click = "showDeleteGenre()">Delete Keyword</button>
     </div>
 
-    <div id = "menu">
-        <button type = "button" onclick = "changeForm('add')" id = "add">add</button>
-        <button type = "button" onclick = "changeForm('find')" id = "find">find</button>
-        <button type = "button" onclick = "changeForm('update')" id = "upd">update</button>
-        <button type = "button" onclick = "changeForm('delete')" id = "dlt">delete</button>
+    <!-- add article-->
+    <div ng-show="AddIsVisible" class= "input_form">
+        <form name="myForm" ng-submit="add()">
+            <div class="input-prepend">
+                <span class="add-on">Article Title</span>
+                <input type=text class="span4" id = titleOfArticle name = titleOfArticle  data-ng-model = "book_add.titleOfArticle" data-ng-init="book_add.titleOfArticle=''" placeholder="Article title...">
+            </div> <br/>
+
+            <div class="input-prepend">
+                <span class="add-on">Journal Title</span>
+                <input type=text class="span4" id = titleOfJournal name = titleOfJournal  data-ng-model = "book_add.titleOfJournal" data-ng-init="book_add.titleOfJournal=''" placeholder="Journal title...">
+            </div> <br/>
+
+            <div class="input-prepend">
+                <span class="add-on">Author</span>
+                <input type=text class="span4" id = author name = author  data-ng-model = "book_add.author" data-ng-init = "book_add.author=''" placeholder="Author of article...">
+            </div> <br/>
+
+            <div class="input-prepend">
+                <span class="add-on">Year</span>
+                <input type=text class="span4" id = year name = year  data-ng-model = "book_add.year" data-ng-init = "book_add.year=''" placeholder="Year of publication...">
+            </div> <br/>
+
+            <div class="input-prepend">
+                <span class="add-on">Reference</span>
+                <input type=text class="span4" id = reference name = reference  data-ng-model = "book_add.reference" data-ng-init = "book_add.reference=''" placeholder="Article reference...">
+            </div> <br/>
+
+            <div class="input-prepend">
+                <span class="add-on">Keyword #1</span>
+                <select name = genre1 data-ng-model = "book_add.genre1" data-ng-init = "book_add.genre1=''"
+                        data-ng-options = "item for item in genres">
+                    <option style="color:#9c9c9c" value="" >--Select Article keyword--</option>
+                </select>
+            </div> </br>
+
+            <div class="input-prepend">
+                <span class="add-on">Keyword #2</span>
+                <select name = genre2 data-ng-model="book_add.genre2" data-ng-init="book_add.genre2=''"
+                        data-ng-options = "item for item in genres">
+                    <option style="color:#9c9c9c" value="" >--Select Article keyword--</option>
+                </select>
+            </div> </br>
+
+            <div class="input-prepend">
+                <span class="add-on">Keyword #3</span>
+                <select name = genre3 data-ng-model="book_add.genre3" data-ng-init="book_add.genre3=''"
+                        data-ng-options = "item for item in genres">
+                    <option style="color:#9c9c9c" value="" >--Select Article keyword--</option>
+                </select>
+            </div> </br>
+
+            <div class="input-prepend">
+                <span class="add-on">Keyword #4</span>
+                <select name = genre4 data-ng-model="book_add.genre4" data-ng-init="book_add.genre4=''"
+                        data-ng-options = "item for item in genres">
+                    <option style="color:#9c9c9c" value="" >--Select Article keyword--</option>
+                </select>
+            </div> </br>
+
+            <div class="input-prepend">
+                <span class="add-on">Keyword #5</span>
+                <select name = genre5 data-ng-model="book_add.genre5" data-ng-init="book_add.genre5=''"
+                        data-ng-options = "item for item in genres">
+                    <option style="color:#9c9c9c" value="" >--Select Article keyword--</option>
+                </select>
+            </div> </br>
+
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default" type="button" ng-click="reset()">Cancel</button>
+                <button class="btn btn-primary">Add Article</button>
+            </div>
+            </br>
+        </form>
     </div>
 
-    <div id = "formField">
-<!-- add -->
-        <div id = "addForm" class = "form">
-            <form method="post" action = "add">
-                <div class = "up">
-                    <div class = inputBlock>
-                        <label for = "titleA">Title</label><br>
-                        <input type = text id = "titleA" name = "title" class = textinput>
-                    </div>
+    <form class="form_info"><button ng-show="ButtonInfo" ng-class="getClass(book)" type="button">{{book}}</button></form>
 
-                    <div class = inputBlock>
-                        <label for = "authorA">Author</label><br>
-                        <input type = text id = "authorA" name = "author" class = textinput>
-                    </div>
+    <!-- add keyword-->
+    <div ng-show="AddGenreIsVisible" class="input_form">
+        <form name="myForm" ng-submit="addGenre()">
+            <div class="input-prepend">
+                <span class="add-on">Keyword</span>
+                <input type=text class="span4" name = genre data-ng-model="book_add_genre.genre" data-ng-init="book_add_genre.genre=''" placeholder="Article keyword...">
+            </div> <br/>
 
-
-                </div>
-
-                <div class = "down">
-                    <div class = inputBlock>
-                        <label for = "isbnA">ISBN</label><br>
-                        <input type = text id = "isbnA" name = "isbn" class = textinput>
-                    </div>
-
-                    <div class = inputBlock>
-                        <label for = "yearA">Year</label><br>
-                        <input type = text id = "yearA" name = "year" class = textinput>
-                    </div>
-                </div>
-
-                <div class = "down">
-                    <label>Genres</label><br>
-                    <div class = inputBlock>
-                        <select name = genre1>
-                            <option value=""></option>
-                            <option value = Horror>Horror</option>
-                            <option value = Fantasy>Fantasy</option>
-                            <option value = Travel>Travel</option>
-                            <option value = Autobiographies>Autobiographies</option>
-                        </select>
-                    </div>
-
-                    <div class = inputBlock>
-                        <select name = genre2>
-                            <option value=""></option>
-                            <option value = Horror>Horror</option>
-                            <option value = Fantasy>Fantasy</option>
-                            <option value = Travel>Travel</option>
-                            <option value = Autobiographies>Autobiographies</option>
-                        </select>
-                    </div>
-
-                    <div class = inputBlock>
-                        <select name = genre3>
-                            <option value=""></option>
-                            <option value = Horror>Horror</option>
-                            <option value = Fantasy>Fantasy</option>
-                            <option value = Travel>Travel</option>
-                            <option value = Autobiographies>Autobiographies</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type = submit class = "submitButton">add</button>
-            </form>
-        </div>
-
-<!-- find -->
-
-        <div id = "findForm" class = "form">
-            <form method="post" action = "finder">
-                <div class = inputBlock>
-                    <label for = "ISBNF">ISBN</label><br>
-                    <input type = text id = "ISBNF" name = "isbn" class = textinput>
-                </div>
-                <button type = submit class = "submitButton">find</button>
-            </form>
-        </div>
-
-<!-- update -->
-
-        <div id = "updateForm" class = "form">
-            <form method="post" action = "findforupdate">
-                <div class = inputBlock>
-                    <label for = "ISBNU">ISBN</label><br>
-                    <input type = text id = "ISBNU" name = "isbn" class = textinput>
-                </div>
-                <button type = submit class = "submitButton">find</button>
-            </form>
-        </div>
-
-<!-- delete -->
-
-        <div id = "deleteForm" class = "form">
-            <form method="post" action="findfordelete">
-                <div class = inputBlock>
-                    <label for = "ISBND">ISBN</label><br>
-                    <input type = text id = "ISBND" name = "isbn" class = textinput>
-                </div>
-                <button type = submit class = "submitButton">delete</button>
-            </form>
-        </div>
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default" type="button" ng-click="reset()">Cancel</button>
+                <button class="btn btn-primary">Add keyword</button>
+            </div>
+            </br>
+        </form>
     </div>
+
+    <!-- delete keyword-->
+    <div ng-show="DeleteGenreIsVisible" class="input_form">
+        <form name="myForm" ng-submit="deleteGenre()">
+            <div class="input-prepend">
+                <span class="add-on">Keyword</span>
+                <input type=text class="span4" name = genre data-ng-model="book_delete_genre.genre" data-ng-init="book_delete_genre.genre=''" placeholder="Keyword...">
+            </div> <br/>
+
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default" type="button" ng-click="reset()">Cancel</button>
+                <button class="btn btn-primary">Delete Keyword</button>
+            </div>
+            </br>
+        </form>
+    </div>
+
+    <!-- find article-->
+    <div ng-show="FindIsVisible" class="input_form">
+        <form id="find">
+            <div class="input-prepend">
+                <span class="add-on">ISBN</span>
+                <input type=text class="span4" name = isbn  placeholder="Book ISBN...">
+            </div> <br/>
+
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default" type="button" ng-click="reset()">Cancel</button>
+                <button type="button" class="btn btn-primary">Find</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- delete article-->
+    <div ng-show="DeleteIsVisible" class="input_form">
+        <form name="form" ng-submit="delete()">
+            <div class="input-prepend">
+                <span class="add-on">ID</span>
+                <input type=text class="span4" name = id data-ng-model="book_delete.id" data-ng-init="book_delete.id=''" required placeholder="Article ID...">
+            </div> <br/>
+
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-primary">Delete Article</button>
+            </div>
+            </br>
+        </form>
+    </div>
+
+    <script src="../js/angular.min.js"></script>
+    <script>
+        angular.module('admin', [])
+                .controller('list', function($scope, $http){
+                    $scope.book_add = {};// AngularJS will populate this object with input values based on the data-ng-model mappings.
+                    $scope.book_delete = {};
+                    $scope.book_add_genre = {};
+                    $scope.book_delete_genre = {};
+
+                    $scope.names = [];
+                    $http.get('/findGenres').success(function(data) {
+                        $scope.genres = data;
+                    });
+
+                    $scope.add = function(){
+                        $http({
+                            method: 'POST',
+                            url: 'adder',
+                            headers: {'Content-Type': 'application/json'},
+                            data:  $scope.book_add
+                        }).success(function (data){
+                            $scope.AddIsVisible = false;
+                            $scope.ButtonInfo = true;
+                            $scope.book = data;
+                        });
+                    };
+
+                    $scope.addGenre = function(){
+                        $http({
+                            method: 'POST',
+                            url: 'adderGenre',
+                            headers: {'Content-Type': 'application/json'},
+                            data:  $scope.book_add_genre
+                        }).success(function (data){
+                            $scope.AddGenreIsVisible = false;
+                            $scope.AddIsVisible = false;
+                            $scope.ButtonInfo = true;
+                            $scope.book = data;
+                        });
+                    };
+
+                    $scope.deleteGenre = function(){
+                        $http({
+                            method: 'POST',
+                            url: 'deleterGenre',
+                            headers: {'Content-Type': 'application/json'},
+                            data:  $scope.book_delete_genre
+                        }).success(function (data){
+                            $scope.DeleteGenreIsVisible = false;
+                            $scope.AddGenreIsVisible = false;
+                            $scope.AddIsVisible = false;
+                            $scope.ButtonInfo = true;
+                            $scope.book = data;
+                        });
+                    };
+
+                    $scope.delete = function(){
+                        $http({
+                            method: 'POST',
+                            url: 'deleter',
+                            headers: {'Content-Type': 'application/json'},
+                            data:  $scope.book_delete
+                        }).success(function (data){
+                            $scope.DeleteIsVisible = false;
+                            $scope.ButtonInfo = true;
+                            $scope.book = data;
+                        });
+                    };
+
+                    $scope.getClass = function(string) {
+                        return {
+                            "alert alert-success": (string.substring(0,7) == "Article" | string.substring(0,7) == "Keyword"),
+                            "alert alert-error": (string.substring(0,5) == "Error")
+                        };
+                    };
+
+                    $scope.showAdd = function () {
+                        $scope.AddIsVisible = true;
+                        $scope.AddGenreIsVisible = false;
+                        $scope.DeleteGenreIsVisible = false;
+                        $scope.DeleteIsVisible = false;
+                        $scope.ButtonInfo = false;
+                    };
+
+                    $scope.showAddGenre = function () {
+                        $scope.AddGenreIsVisible = true;
+                        $scope.DeleteGenreIsVisible = false;
+                        $scope.AddIsVisible = false;
+                        $scope.DeleteIsVisible = false;
+                        $scope.ButtonInfo = false;
+                    };
+
+                    $scope.showDeleteGenre = function () {
+                        $scope.DeleteGenreIsVisible = true;
+                        $scope.AddGenreIsVisible = false;
+                        $scope.AddIsVisible = false;
+                        $scope.DeleteIsVisible = false;
+                        $scope.ButtonInfo = false;
+                    };
+
+                    $scope.showDelete = function () {
+                        $scope.DeleteIsVisible = true;
+                        $scope.AddGenreIsVisible = false;
+                        $scope.DeleteGenreIsVisible = false;
+                        $scope.AddIsVisible = false;
+                        $scope.ButtonBookDeleted = false;
+                        $scope.ButtonInfo = false;
+                    };
+
+                    $scope.cancel = function () {
+                        $scope.book_delete.isbn = "";
+                        $scope.form.$setPristine();
+                    };
+
+                    $scope.reset = function () {
+                        $scope.book_add.titleOfArticle = "";
+                        $scope.book_add.titleOfJournal = "";
+                        $scope.book_add.author = "";
+                        $scope.book_add.year = "";
+                        $scope.book_add.reference = "";
+                        $scope.book_add.genre1 = "";
+                        $scope.book_add.genre2 = "";
+                        $scope.book_add.genre3 = "";
+                        $scope.book_add.genre4 = "";
+                        $scope.book_add.genre5 = "";
+                        $scope.book_add_genre = "";
+                        $scope.book_delete_genre = "";
+                        $scope.myForm.$setPristine();
+                    };
+                });
+    </script>
 </body>
 </html>

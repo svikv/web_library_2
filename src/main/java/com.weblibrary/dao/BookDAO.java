@@ -1,14 +1,22 @@
 package com.weblibrary.dao;
 
-import com.weblibrary.service.BookFull;
 import com.weblibrary.entity.Book;
+import com.weblibrary.entity.Genre;
+import org.hibernate.HibernateException;
+import java.util.HashSet;
+import java.util.List;
 
 public interface BookDAO {
 
-    long addBook(String title,String author,String year, String type1, String type2,String type3);
-    void delete(long isbn);
-    Book findBook(String title,String author,String year);
-    BookFull findAll(String title,String author,String year,String genre);
-    Book findByIsbn(long isbn);
-    Book update(long isbn,String author,String title,String year, String genre1, String genre2, String genre3);
+    long addBook(String titleOfArticle, String titleOfJournal, String author, String year, String reference, String genre1, String genre2, String genre3, String genre4, String genre5);
+    HashSet<Book> findAll(String titleOfArticle, String titleOfJournal, String author, String year, List<String> genreList);
+    boolean delete (long id);
+    boolean deleteGenre (String genre);
+    boolean findBook (String titleOfArticle, String titleOfJournal, String author, String year);
+    long addGenre(String genre);
+    boolean findGenre (String genre);
+    List<Genre> findAllGenres();
+    Book findById(long id);
+    Book update(long id, String author, String titleOfArticle, String titleOfJournal, String year, String reference, String genre1, String genre2, String genre3, String genre4, String genre5);
+    Genre getGenre(String type);
 }

@@ -3,6 +3,7 @@ package com.weblibrary.Servlet.AdminServlets;
 import com.weblibrary.dao.BookDAO;
 import com.weblibrary.entity.Book;
 import org.hibernate.HibernateException;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,16 +21,18 @@ import java.io.IOException;
 @WebServlet("/finder")
 public class ServletFind extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
         response.setContentType("text/html");
         HttpSession session = request.getSession();
 
         String ISBN = request.getParameter("isbn");
         long isbn = Integer.parseInt(ISBN);
 
-        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        BookDAO bookDAO = context.getBean(BookDAO.class);
 
-        try{
-            Book book = bookDao.findByIsbn(isbn);
+        try {
+            Book book = bookDAO.findById(isbn);
             request.setAttribute("book", book);
             request.setAttribute("msg", "Book found!");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/view.jsp");

@@ -3,6 +3,7 @@ package com.weblibrary.Servlet.AdminServlets;
 import com.weblibrary.dao.BookDAO;
 import com.weblibrary.entity.Book;
 import org.hibernate.HibernateException;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,18 +16,24 @@ import java.io.IOException;
 @WebServlet("/update")
 public class ServletFinallyUpdater extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String author = request.getParameter("author");
-        String title = request.getParameter("title");
+        String titleOfArticle = request.getParameter("titleOfArticle");
+        String titleOfJournal = request.getParameter("titleOfJournal");
         String ISBN = request.getParameter("isbn");
         String year = request.getParameter("year");
+        String reference = request.getParameter("reference");
         String genre1 = request.getParameter("genre1");
         String genre2 = request.getParameter("genre2");
         String genre3 = request.getParameter("genre3");
+        String genre4 = request.getParameter("genre4");
+        String genre5 = request.getParameter("genre5");
 
-        long isbn = Integer.parseInt(ISBN);
+        long id = Integer.parseInt(ISBN);
 
-        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
-        Book book = bookDao.update(isbn, author, title, year, genre1, genre2, genre3);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        BookDAO bookDAO = context.getBean(BookDAO.class);
+        Book book = bookDAO.update(id, author, titleOfArticle, titleOfJournal, year, reference, genre1, genre2, genre3, genre4, genre5);
 
         request.setAttribute("book", book);
         request.setAttribute("msg", "Updated book!");

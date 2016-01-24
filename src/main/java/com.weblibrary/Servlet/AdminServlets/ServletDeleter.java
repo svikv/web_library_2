@@ -1,37 +1,55 @@
 package com.weblibrary.Servlet.AdminServlets;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.weblibrary.dao.BookDAO;
-import com.weblibrary.entity.Book;
-import org.hibernate.HibernateException;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 
-@WebServlet("/findfordelete")
+@WebServlet("/deleter")
 public class ServletDeleter extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ISBN = request.getParameter("isbn");
-        long isbn = Integer.parseInt(ISBN);
 
-        BookDAO bookDao=(BookDAO)getServletContext().getAttribute("bookDao");
-
-        try{
-            Book book = bookDao.findByIsbn(isbn);
-            request.setAttribute("book", book);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/admin/delete.jsp");
-            requestDispatcher.forward(request, response);
-        } catch (HibernateException e){
+        StringBuffer json = new StringBuffer();
+        try {
+            BufferedReader reader = request.getReader();
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                json.append(line);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-            String error = "Error deleting book! Book with this ISBN don`t exist!";
-            request.setAttribute("error", error);
-            request.setAttribute("forwardTo", "admin/admin.html");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/error.jsp");
-            requestDispatcher.forward(request, response);
+        }
+        String string = json.toString();
+
+        Gson gson = new Gson();
+        JsonObject input = gson.fromJson(string, JsonElement.class).getAsJsonObject();
+        String  ID = input.get("id").getAsString();
+
+        long id = Integer.parseInt(ID);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        BookDAO bookDAO = context.getBean(BookDAO.class);
+
+        String str;
+            if (bookDAO.delete(id)) {
+                str = "Article with ID:" + ID + " has deleted";
+            }
+            else {
+                str = "Error deleting article! Article with ID:" + ID +" doesn`t exist!";
+            }
+
+        try {
+            response.setContentType("application/json");
+            response.getWriter().write(gson.toJson(str));
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 }

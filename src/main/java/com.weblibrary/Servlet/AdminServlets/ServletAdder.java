@@ -3,6 +3,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.weblibrary.dao.BookDAO;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,7 +45,8 @@ public class ServletAdder extends HttpServlet {
         System.out.println("Our Book:"+titleOfArticle + ", " + titleOfJournal + ", " + author + ", " + year +
                 ", " + genre1+ ", " + genre2+ ", " + genre3 + ", " + genre4 + ", " + genre5);
 
-        BookDAO bookDAO = (BookDAO)getServletContext().getAttribute("bookDao");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        BookDAO bookDAO = context.getBean(BookDAO.class);
 
         String str;
         if (bookDAO.findBook(titleOfArticle, titleOfJournal, author, year)) {

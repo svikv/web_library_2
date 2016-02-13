@@ -1,0 +1,50 @@
+.btn.btn-default, .btn.btn-primary{
+    width: auto;
+    height: 30px;
+}
+
+#button_add_book,#button_add_genre,#button_delete_genre,#button_find,#button_delete{
+    width: 130px;
+    height: 50px;
+}
+
+
+#titleOfArticle.span4{
+    width: 350px;
+}
+
+#titleOfJournal.span4{
+    width: 341px;
+}
+
+#author.span4{
+    width: 239px;
+}
+
+#year.span4{
+    width: 251px;
+}
+
+#reference.span4{
+    width: 215px;
+}
+
+#commands{
+    margin:50px 50px;
+    float: left;
+}
+
+form{
+    float: left;
+    padding: 50px 50px;
+}
+
+.form_info{
+    padding: 100px 50px 50px 50px;
+    text-align: center;
+}
+
+.alert-success {
+    text-align:center;
+    padding: 10px;
+}

@@ -1,8 +1,8 @@
-/*package com.weblibrary.dao;
+/*package com.com.weblibrary.dao;
 
-import com.weblibrary.entity.Book;
-import com.weblibrary.entity.Genre;
-import com.weblibrary.service.HibernateUtil;
+import com.com.weblibrary.entity.Book;
+import com.com.weblibrary.entity.Genre;
+import com.com.weblibrary.service.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;

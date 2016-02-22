@@ -7,7 +7,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ public class BookDAOHibernateImpl implements BookDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(BookDAOHibernateImpl.class);
 
-    @Autowired
     private SessionFactory sessionFactory;
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -36,19 +34,20 @@ public class BookDAOHibernateImpl implements BookDAO {
         if (!"".equals(listStr.get(2))) book.getGenres().add(getGenre(listStr.get(2)));
         if (!"".equals(listStr.get(3))) book.getGenres().add(getGenre(listStr.get(3)));
         if (!"".equals(listStr.get(4))) book.getGenres().add(getGenre(listStr.get(4)));
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.persist(book);
         logger.info("Book saved successfully, book details="+book);
         return book.getId();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public HashSet<Book> findAll(Book book){
         List<Genre> list=book.getGenres();
         List<String> listStr=new ArrayList<String>();
         for(Genre genre:list) listStr.add(genre.getGenre());
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Criteria c1 = session.createCriteria(Book.class);
         if ((!"".equals(book.getTitleOfArticle())) && (!book.getTitleOfArticle().equals(null))) c1.
                 add(Restrictions.like("titleOfArticle", book.getTitleOfArticle(), MatchMode.ANYWHERE).ignoreCase());
@@ -59,7 +58,7 @@ public class BookDAOHibernateImpl implements BookDAO {
         if (!listStr.isEmpty()) c1.createCriteria("genres").add(Restrictions.in("genre", listStr));
 
         List<Book> books = (ArrayList<Book>) c1.list();
-        HashSet<Book> hash = new HashSet<>(books);
+        HashSet<Book> hash = new HashSet<Book>(books);
         for(Book b: hash) {
             System.out.println(b.getGenres());
             logger.info("Book List::"+b);
@@ -67,10 +66,30 @@ public class BookDAOHibernateImpl implements BookDAO {
         return hash;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
+    public List<Book> listBooks() {
+
+        Session session = sessionFactory.getCurrentSession();
+        Criteria c1 = session.createCriteria(Book.class);
+        List<Book> booksList = (ArrayList<Book>) c1.list();
+        for(Book b : booksList){
+            logger.info("Book List::"+b);
+        }
+        return booksList;
+    }
+
+    @Override
+    public void updateBook(Book b) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(b);
+        logger.info("Book updated successfully, Book Details="+b);
+    }
+
+    //@Override
     public boolean deleteBook (int id) {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Book book = (Book)session.load(Book.class, new Integer(id));
         if(null != book){
             session.delete(book);
@@ -83,7 +102,7 @@ public class BookDAOHibernateImpl implements BookDAO {
     @Override
     public boolean deleteGenre (int id) {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Genre genre = (Genre)session.load(Genre.class, new Integer(id));
         if(null != genre){
             session.delete(genre);
@@ -93,10 +112,11 @@ public class BookDAOHibernateImpl implements BookDAO {
         else return false;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean findBook (Book book) {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Criteria c1 = session.createCriteria(Book.class);
         c1.add(Restrictions.eq("titleOfArticle", book.getTitleOfArticle())).add(Restrictions.eq("titleOfJournal", book.getTitleOfJournal())).
                 add(Restrictions.eq("author", book.getAuthor())).add(Restrictions.eq("year", book.getYear()));
@@ -108,26 +128,28 @@ public class BookDAOHibernateImpl implements BookDAO {
     public int addGenre(String genre) {
 
         Genre g = new Genre(genre);
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.persist(g);
         logger.info("Genre saved successfully, genre details="+genre);
         return g.getId();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean findGenre (Genre genre) {
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Criteria c1 = session.createCriteria(Genre.class);
         c1.add(Restrictions.eq("genre", genre.getGenre()));
         List<Genre> genres = (ArrayList<Genre>) c1.list();
         return (genres.isEmpty());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Genre> findAllGenres(){
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Criteria c1 = session.createCriteria(Genre.class);
         List<Genre> genres = (ArrayList<Genre>) c1.list();
         for(Genre g : genres){
@@ -139,7 +161,7 @@ public class BookDAOHibernateImpl implements BookDAO {
     @Override
     public Book getBookById(int id){
 
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Book book = (Book) session.load(Book.class, new Integer(id));
         System.out.println(book.getGenres());
         logger.info("Book loaded successfully, book details="+book);
@@ -168,7 +190,7 @@ public class BookDAOHibernateImpl implements BookDAO {
     @Override
     public Genre getGenre(String type){
 
-        Session session = this.sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         String hql = "select g.id from Genre g where g.genre = :type";
         org.hibernate.Query query  = session.createQuery(hql);

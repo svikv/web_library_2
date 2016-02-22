@@ -10,8 +10,10 @@ public interface BookDAO {
 
     int addBook(Book book);
     HashSet<Book> findAll(Book book);
+    public List<Book> listBooks();
     boolean deleteBook (int id);
     boolean deleteGenre (int id);
+    public void updateBook(Book b);
     boolean findBook (Book book);
     int addGenre(String genre);
     boolean findGenre (Genre genre);

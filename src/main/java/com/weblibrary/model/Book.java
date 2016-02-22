@@ -12,7 +12,7 @@ public class Book {
     private String author;
     private String year;
     private String reference;
-    private List<Genre> genres = new ArrayList<>();
+    private List<Genre> genres = new ArrayList<Genre>();
 
     public Book(String titleOfArticle, String titleOfJournal, String author, String year, String reference, List<Genre> genres){
         this.titleOfArticle = titleOfArticle;

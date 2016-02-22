@@ -3,7 +3,6 @@ package com.weblibrary.service;
 import com.weblibrary.dao.BookDAO;
 import com.weblibrary.model.Book;
 import com.weblibrary.model.Genre;
-import com.weblibrary.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +18,10 @@ import java.util.List;
 @Service
 public class BookManager {
     //Notice that spring declarative transaction management is applied by using @Transactional annotation
-    //@Autowired
+    @Autowired
     private BookDAO bookDAO;
 
-    public void setPersonDAO(BookDAO bookDAO) {
+    public void setBookDAO(BookDAO bookDAO) {
         this.bookDAO = bookDAO;
     }
 
@@ -37,8 +36,18 @@ public class BookManager {
     }
 
     @Transactional
+    public List<Book> listBooks() {
+        return bookDAO.listBooks();
+    }
+
+    @Transactional
     public boolean deleteBook (int id) {
         return bookDAO.deleteBook(id);
+    }
+
+    @Transactional
+    public void updateBook (Book b) {
+        bookDAO.updateBook(b);
     }
 
     @Transactional

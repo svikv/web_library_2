@@ -8,7 +8,7 @@ import java.util.List;
 public class Genre {
     private int id;
     private String genre;
-    private transient List<Book> books = new ArrayList<>();
+    private transient List<Book> books = new ArrayList<Book>();
 
     public Genre(int id, String genre){
         this.id = id;
@@ -17,6 +17,9 @@ public class Genre {
 
     public Genre(String genre){
         this.genre = genre;
+    }
+
+    public Genre() {
     }
 
     @ManyToMany
